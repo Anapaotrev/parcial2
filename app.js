@@ -30,7 +30,7 @@ app.get('/students/:id', function(req, res) {
 app.get('/met', function(req, res) {
     if (!req.query.search) {
         res.send({
-            error: 'Debes enviar una ¿?'
+            error: 'Debes enviar un query'
         })
     } else {
         const q = req.query.search

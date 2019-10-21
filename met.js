@@ -29,7 +29,7 @@ const getObject = function(objectId, callback) {
                 callback(response.message, undefined)
             } else {
                 const data = response.body
-                const artist = data.constituents ? data.constituents[0].name : 'No Artist'
+                const artist = data.constituents ? data.constituents[0].name : 'No artist'
 
                 const object = {
                     artist: artist,
