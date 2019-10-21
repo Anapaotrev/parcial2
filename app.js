@@ -62,6 +62,27 @@ app.get('/met', function(req, res) {
     }
 })
 
+// Gets a random painting and redirects to url
+app.get('/painting', function(req, res) {
+    met.getPainting(function(error, objectID) {
+        if (error) {
+            res.send({
+                error: error
+            })
+        } else {
+            met.getObject(objectID, function(error, object) {
+                if (error) {
+                    res.send({
+                        error: error
+                    })
+                } else {
+                    res.redirect(object.metUrl)
+                }
+            })
+        }
+    })
+})
+
 app.get('*', function(req, res) {
     res.send({
         error: 'Oops! Ruta no valida'

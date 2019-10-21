@@ -29,13 +29,14 @@ const getObject = function(objectId, callback) {
                 callback(response.message, undefined)
             } else {
                 const data = response.body
+                const artist = data.constituents ? data.constituents[0].name : 'No Artist'
 
                 const object = {
-                    artist: data.constituents[0].name,
+                    artist: artist,
                     title: data.title,
                     year: data.objectEndDate,
                     technique: data.medium,
-                    metUrl: url
+                    metUrl: data.objectURL
                 }
                 callback(undefined, object)
             }
@@ -43,7 +44,23 @@ const getObject = function(objectId, callback) {
     })
 }
 
+const getPainting = function(callback) {
+    const url = 'https://collectionapi.metmuseum.org/public/collection/v1/objects'
+
+    request({ url, json: true }, function(error, response) {
+        if (error) {
+            callback(error, undefined)
+        } else {
+            const data = response.body.objectIDs
+            const random = Math.floor(Math.random() * (+data.length - +0)) + +0
+
+            callback(undefined, data[random])
+        }
+    })
+}
+
 module.exports = {
     searchMet: searchMet,
-    getObject: getObject
+    getObject: getObject,
+    getPainting: getPainting
 }
